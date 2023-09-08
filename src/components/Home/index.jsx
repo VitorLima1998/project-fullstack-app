@@ -1,68 +1,65 @@
-import { Component } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { loadProducts } from '../../utils/loadProducts';
 import { Button } from '../Button';
 import { ProdCard } from '../ProdCard';
+import './styles.scss';
 
-class Home extends Component {
-  state = {
-    products: [],
-    allproducts: [],
-    page: 0,
-    productsPerPage: 6,
-    searchValue: '',
+export const Home = () => {
+  const [products, setProducts] = useState([]);
+  const [allProducts, setAllProducts] = useState([]);
+  const [page, setPage] = useState(0);
+  const [productPerPage] = useState(8);
+  const [searchValue, setSearchValue] = useState('');
+
+  // -------------------------------------------------------------------------------------
+
+  const filteredProducts = !!searchValue
+    ? allProducts.filter((product) => {
+        return product.title.toLowerCase().includes(searchValue.toLowerCase());
+      })
+    : products;
+
+  // -------------------------------------------------------------------------------------
+
+  const handleLoadProducts = useCallback(async (page, productPerPage) => {
+    const data = await loadProducts();
+    setProducts(data.products.slice(page, productPerPage));
+    setAllProducts(data.products);
+  }, []);
+
+  // -------------------------------------------------------------------------------------
+
+  const loadMoreProducts = () => {
+    const nextPage = page + productPerPage;
+    const nextProducts = allProducts.slice(nextPage, nextPage + productPerPage);
+
+    setProducts([...products, ...nextProducts]);
+    setPage(nextPage);
   };
 
-  componentDidMount() {
-    this.loadProducts();
-  }
+  // -------------------------------------------------------------------------------------
 
-  loadProducts = async () => {
-    const { page, productsPerPage } = this.state;
-    const products = await loadProducts();
-
-    this.setState({
-      products: products.slice(page, productsPerPage),
-      allproducts: products,
-    });
-  };
-
-  loadMoreProducts = () => {
-    const { products, allproducts, page, productsPerPage } = this.state;
-    const nextPage = page + productsPerPage;
-    const nextProducts = allproducts.slice(
-      nextPage,
-      nextPage + productsPerPage
-    );
-    this.setState({ products: [...products, ...nextProducts], page: nextPage });
-  };
-
-  handleSearch = (e) => {
+  const handleSearch = (e) => {
     const { value } = e.target;
-    this.setState({ searchValue: value });
+    setSearchValue(value);
   };
 
-  render() {
-    const { products, searchValue } = this.state;
+  // -------------------------------------------------------------------------------------
 
-    const filteredProducts = !!searchValue
-      ? products.filter((prod) => {
-          return prod.title
-            .toLowerCase()
-            .includes(searchValue.toLocaleLowerCase());
-        })
-      : products;
+  useEffect(() => {
+    handleLoadProducts(0, productPerPage);
+  }, [handleLoadProducts, productPerPage]);
 
-    return (
-      <section className='container'>
-        <div className='products'>
-          {filteredProducts.map((prod) => (
-            <ProdCard key={prod.id} product={prod} />
-          ))}
-        </div>
-        <Button text='Load more products' action={this.loadMoreProducts} />
-      </section>
-    );
-  }
-}
+  // -------------------------------------------------------------------------------------
 
-export default Home;
+  return (
+    <section className='container'>
+      <div className='products'>
+        {filteredProducts.map((product) => (
+          <ProdCard key={product.id} product={product} />
+        ))}
+      </div>
+      <Button text='Load More Products' action={loadMoreProducts} />
+    </section>
+  );
+};
