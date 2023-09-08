@@ -1,7 +1,5 @@
 export const loadProducts = async () => {
-  const productsResponse = await fetch('/product/list-products');
-
-  const products = await productsResponse.json();
-
-  return products;
+  const response = await fetch('https://dummyjson.com/products');
+  const data = await response.json();
+  return data;
 };
