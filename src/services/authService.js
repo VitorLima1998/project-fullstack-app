@@ -1,14 +1,33 @@
 import axios from 'axios';
 
-export const login = (username, password) => {
+export const login = async (username, password) => {
   try {
-    const response = axios.post('/auth/login', { username, password });
+    const response = await axios.post('http://localhost:3000/auth/login', {
+      username,
+      password,
+    });
     if (response.status === 200) {
       return true;
     }
     return false;
   } catch (error) {
     console.error('Error while logging in', error);
+    throw error;
+  }
+};
+
+export const register = async (username, password) => {
+  try {
+    const response = await axios.post('http://localhost:3000/auth/register', {
+      username,
+      password,
+    });
+    if (response.status === 200) {
+      return true;
+    }
+    return false;
+  } catch (error) {
+    console.error('Error while registering', error);
     throw error;
   }
 };
