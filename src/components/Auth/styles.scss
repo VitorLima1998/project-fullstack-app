@@ -1,0 +1,31 @@
+.auth-container {
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  justify-content: center;
+  align-items: center;
+
+  .auth {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    width: 20rem;
+    height: 20rem;
+    background: rgba(255, 255, 255, 0.25);
+    backdrop-filter: blur(10rem);
+    border-radius: 10px;
+    padding: 20px;
+    color: #eee;
+
+    .button {
+      display: flex;
+      gap: 1rem;
+
+      Button {
+        width: 10rem;
+      }
+    }
+  }
+}
