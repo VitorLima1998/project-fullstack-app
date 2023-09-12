@@ -23,9 +23,9 @@ export const Products = () => {
   // -------------------------------------------------------------------------------------
 
   const handleLoadProducts = useCallback(async (page, productPerPage) => {
-    const data = await loadProducts();
-    setProducts(data.products.slice(page, productPerPage));
-    setAllProducts(data.products);
+    const products = await loadProducts();
+    setProducts(products.data.slice(page, productPerPage));
+    setAllProducts(products.data);
   }, []);
 
   // -------------------------------------------------------------------------------------
