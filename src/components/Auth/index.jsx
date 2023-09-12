@@ -3,6 +3,7 @@ import { toast } from 'react-toastify';
 import { useState } from 'react';
 import { Input } from '../Input';
 import { Button } from '../Button';
+import { useNavigate } from 'react-router-dom';
 import './styles.scss';
 
 export const Auth = ({ onAuth }) => {
@@ -10,20 +11,22 @@ export const Auth = ({ onAuth }) => {
   const [password, setPassword] = useState('');
   const [isLoginMode, setIsLoginMode] = useState(true);
 
+  const navigate = useNavigate();
+
   const handleAuth = async () => {
     try {
       if (isLoginMode) {
         const success = await login(username, password);
         if (success) {
           onAuth(true);
-          toast.success('Login successful!');
+          toast.success('Login successfully!');
+          navigate('/products');
         }
       } else {
         const success = await register(username, password);
         if (success) {
           onAuth(true);
-        } else {
-          toast.success('Registration successful!');
+          toast.success('Registration successfully!');
         }
       }
     } catch (error) {
