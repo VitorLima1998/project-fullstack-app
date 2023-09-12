@@ -7,6 +7,8 @@ export const login = async (username, password) => {
       password,
     });
     if (response.status === 200) {
+      const { token } = response.data;
+      localStorage.setItem('token', token);
       return true;
     }
     return false;
