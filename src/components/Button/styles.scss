@@ -1,15 +1,19 @@
 button {
   cursor: pointer;
-  background-color: transparent;
-  border: solid 1px #eee;
+  background: transparent;
+  border: solid 0.1rem #eee;
   color: #eee;
   border-radius: 0.5rem;
-  font-size: 15px;
+  font-size: 1.2rem;
   font-weight: bold;
   height: 3rem;
   padding: 0 1rem;
   width: 15rem;
   margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
   &:hover {
     transform: scale(1.1);
     transition: all 0.5s;
