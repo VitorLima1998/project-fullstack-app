@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { Input } from '../Input';
 import { Button } from '../Button';
 import { useNavigate } from 'react-router-dom';
+import { FaExchangeAlt } from 'react-icons/fa';
 import './styles.scss';
 
 export const Auth = ({ onAuth }) => {
@@ -38,27 +39,33 @@ export const Auth = ({ onAuth }) => {
   return (
     <div className='auth-container'>
       <div className='auth'>
-        <h2>{isLoginMode ? 'Welcome' : 'Register'}</h2>
-        <Input
-          type='text'
-          placeholder='Username'
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-        />
-        <Input
-          type='password'
-          placeholder='Password'
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
+        <div className='title'>
+          <h2>{isLoginMode ? 'Login' : 'Register'}</h2>
+        </div>
+        <div className='input'>
+          <Input
+            type='text'
+            placeholder='Username'
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+          />
+          <Input
+            type='password'
+            placeholder='Password'
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+        </div>
+
         <div className='button'>
           <Button
             text={isLoginMode ? 'Login' : 'Register'}
             action={handleAuth}
           />
           <Button
-            text={isLoginMode ? 'Switch to Register' : 'Switch to Login'}
+            text={isLoginMode ? 'Register' : 'Login'}
             action={() => setIsLoginMode(!isLoginMode)}
+            icon={<FaExchangeAlt />}
           />
         </div>
       </div>
