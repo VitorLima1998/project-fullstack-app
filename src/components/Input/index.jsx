@@ -3,7 +3,7 @@ import './styles.scss';
 
 export class Input extends Component {
   render() {
-    const { type, name, id, placeholder, value, onChange } = this.props;
+    const { type, name, placeholder, value, onChange } = this.props;
 
     return (
       <input
