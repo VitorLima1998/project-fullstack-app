@@ -1,10 +1,19 @@
+import { Carousel } from 'react-responsive-carousel';
+import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import { Image } from '../Image';
 import './styles.scss';
 
 export const ProdCard = ({ product }) => {
   return (
+    // const {onChange,onClickItem,onClickThumb} = this.props;
     <div className='product' key={product.id}>
-      <Image src={product.thumbnail} alt={product.title} />
+      <Carousel useKeyboardArrows={true}>
+        {product.images.map((image, index) => (
+          <div key={index}>
+            <Image src={image.url} alt={`Product ${index}`} />
+          </div>
+        ))}
+      </Carousel>
       <div className='text'>
         <h1>{product.title}</h1>
         <p>{product.description}</p>
