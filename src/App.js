@@ -20,14 +20,15 @@ function App() {
   return (
     <Router>
       <div>
-        <ToastContainer />
+        <ToastContainer position='top-center' theme='dark' autoClose={500} />
         <Routes>
+          <Route path='/' element={<Navigate to='/auth' />} />
           <Route path='/auth' element={<Auth onAuth={handleLogin} />} />
-          <Route
+          <Route path='/products' element={<Products />} />
+          {/* <Route
             path='/products'
             element={loggedIn ? <Products /> : <Navigate to='/auth' />}
-          />
-          <Route path='/' element={<Navigate to='/auth' />} />
+          /> */}
         </Routes>
       </div>
     </Router>
