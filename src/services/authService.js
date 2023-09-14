@@ -1,5 +1,21 @@
 import axios from 'axios';
 
+export const register = async (username, password) => {
+  try {
+    const response = await axios.post('http://localhost:3000/auth/register', {
+      username,
+      password,
+    });
+    if (response.status === 200) {
+      return true;
+    }
+    return false;
+  } catch (error) {
+    console.error('Error while registering', error);
+    throw error;
+  }
+};
+
 export const login = async (username, password) => {
   try {
     const response = await axios.post('http://localhost:3000/auth/login', {
@@ -18,18 +34,12 @@ export const login = async (username, password) => {
   }
 };
 
-export const register = async (username, password) => {
+export const logout = async () => {
   try {
-    const response = await axios.post('http://localhost:3000/auth/register', {
-      username,
-      password,
-    });
-    if (response.status === 200) {
-      return true;
-    }
-    return false;
+    localStorage.removeItem('token');
+    return true;
   } catch (error) {
-    console.error('Error while registering', error);
+    console.error('Error logout', error);
     throw error;
   }
 };
